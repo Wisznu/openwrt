@@ -1,0 +1,19 @@
+--- signal_ext1.4/configure.orig	2008-07-02 17:53:38.000000000 +0200
++++ signal_ext1.4/configure	2008-07-02 18:18:00.000000000 +0200
+@@ -561,7 +561,7 @@
+ # -MODIFIED-
+ # from 1.4 to 1.4-confpatch by tilman kranz
+ # totally bogus (sorry) auto-detection for "tclInit.sh"
+-TclConfigSh=$TCL_BIN_DIR/../lib/tclConfig.sh
++TclConfigSh=$TCL_BIN_DIR/tclConfig.sh
+ if test -r $TclConfigSh ; then
+    . $TclConfigSh
+ else
+@@ -1205,6 +1205,7 @@
+ s%@TCL_LD_FLAGS@%$TCL_LD_FLAGS%g
+ s%@TCL_LD_SEARCH_FLAGS@%$TCL_LD_SEARCH_FLAGS%g
+ s%@TCL_LIB_SPEC@%$TCL_LIB_SPEC%g
++s%@TCL_BUILD_STUB_LIB_SPEC@%$TCL_BUILD_STUB_LIB_SPEC%g
+ s%@TCL_PACKAGE_PATH@%$TCL_PACKAGE_PATH%g
+ s%@TCL_SHLIB_CFLAGS@%$TCL_SHLIB_CFLAGS%g
+ s%@TCL_SHLIB_LD_LIBS@%$TCL_SHLIB_LD_LIBS%g

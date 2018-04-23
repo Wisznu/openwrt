@@ -1,0 +1,32 @@
+--- tcl8.6/unix/Makefile.in	2015-03-11 14:59:56.000000000 +0100
++++ Makefile.in	2015-10-20 13:44:45.560943520 +0200
+@@ -746,23 +746,23 @@
+ # This target can be used to run tclsh from the build directory
+ # via `make shell SCRIPT=/tmp/foo.tcl`
+ shell: ${TCL_EXE}
+-	$(SHELL_ENV) ./${TCL_EXE} $(SCRIPT)
++	$(SHELL_ENV) ${TCL_EXE} $(SCRIPT)
+ 
+ # This target can be used to run tclsh inside either gdb or insight
+ gdb: ${TCL_EXE}
+-	$(SHELL_ENV) $(GDB) ./${TCL_EXE}
++	$(SHELL_ENV) $(GDB) ${TCL_EXE}
+ 
+ valgrind: ${TCL_EXE} ${TCLTEST_EXE}
+-	$(SHELL_ENV) $(VALGRIND) $(VALGRINDARGS) ./${TCLTEST_EXE} $(TOP_DIR)/tests/all.tcl -singleproc 1 -constraints valgrind $(TESTFLAGS)
++	$(SHELL_ENV) $(VALGRIND) $(VALGRINDARGS) ${TCLTEST_EXE} $(TOP_DIR)/tests/all.tcl -singleproc 1 -constraints valgrind $(TESTFLAGS)
+ 
+ valgrindshell: ${TCL_EXE}
+-	$(SHELL_ENV) $(VALGRIND) $(VALGRINDARGS) ./${TCL_EXE} $(SCRIPT)
++	$(SHELL_ENV) $(VALGRIND) $(VALGRINDARGS) ${TCL_EXE} $(SCRIPT)
+ 
+ trace-shell: ${TCL_EXE}
+-	$(SHELL_ENV) ${TRACE} $(TRACE_OPTS) ./${TCL_EXE} $(SCRIPT)
++	$(SHELL_ENV) ${TRACE} $(TRACE_OPTS) ${TCL_EXE} $(SCRIPT)
+ 
+ trace-test: ${TCLTEST_EXE}
+-	$(SHELL_ENV) ${TRACE} $(TRACE_OPTS) ./${TCLTEST_EXE} $(TOP_DIR)/tests/all.tcl -singleproc 1 $(TESTFLAGS)
++	$(SHELL_ENV) ${TRACE} $(TRACE_OPTS) ${TCLTEST_EXE} $(TOP_DIR)/tests/all.tcl -singleproc 1 $(TESTFLAGS)
+ 
+ #--------------------------------------------------------------------------
+ # Installation rules

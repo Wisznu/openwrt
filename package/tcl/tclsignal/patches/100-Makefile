@@ -1,0 +1,26 @@
+--- signal_ext1.4/Makefile.in.orig	2008-07-02 17:39:15.000000000 +0200
++++ signal_ext1.4/Makefile.in	2008-07-02 18:18:21.000000000 +0200
+@@ -1,15 +1,18 @@
+ CC=@TCL_CC@
+ #  Tilman Kranz; Sun Oct 19 23:21:35 CEST 2003: added Tcl include directives
+-CFLAGS=-I/usr/include @TCL_DEFS@ @TCL_SHLIB_CFLAGS@ -I@TCL_PREFIX@/include @TCL_INCLUDE_SPEC@ -I@TCL_INC_DIR@
++CFLAGS=-I../tcl8.4.12/ipkg-install/usr/include @TCL_DEFS@ @TCL_SHLIB_CFLAGS@
+ LD=@TCL_SHLIB_LD@
++
++all: signal@TCL_SHLIB_SUFFIX@
++
+ signal@TCL_SHLIB_SUFFIX@: signal_ext.c
+ 	$(CC) $(CFLAGS) -c signal_ext.c 
+-	$(LD) signal_ext.o -o signal@TCL_SHLIB_SUFFIX@ @TCL_LIB_SPEC@ @TCL_LIBS@
++	$(LD) signal_ext.o -o signal@TCL_SHLIB_SUFFIX@ @TCL_BUILD_STUB_LIB_SPEC@ @TCL_LIBS@
+ 	-rm -f signal_ext.o
+ install:
+-	-mkdir @TCL_PACKAGE_PATH@/signal
+-	@INSTALL@ signal@TCL_SHLIB_SUFFIX@ @TCL_PACKAGE_PATH@/signal
+-	@INSTALL@ pkgIndex.tcl @TCL_PACKAGE_PATH@/signal
++	-mkdir @prefix@/signal
++	@INSTALL@ signal@TCL_SHLIB_SUFFIX@ @prefix@/signal
++	@INSTALL@ pkgIndex.tcl @prefix@/signal
+ clean:
+ 	-rm -f signal@TCL_SHLIB_SUFFIX@ so_locations Makefile config.log config.status config.cache
+ dist:

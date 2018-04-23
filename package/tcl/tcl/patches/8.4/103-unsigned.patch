@@ -1,0 +1,118 @@
+--- tcl8.4.12/generic/tclBinary.c.orig	Wed Aug 24 12:36:57 2005
++++ tcl8.4.12/generic/tclBinary.c	Wed Aug 24 13:47:16 2005
+@@ -59,7 +59,8 @@
+ static int		GetFormatSpec _ANSI_ARGS_((char **formatPtr,
+ 			    char *cmdPtr, int *countPtr));
+ static Tcl_Obj *	ScanNumber _ANSI_ARGS_((unsigned char *buffer,
+-			    int type, Tcl_HashTable **numberCachePtr));
++			    int type, Tcl_HashTable **numberCachePtr,
++                            unsigned int unsign));
+ static int		SetByteArrayFromAny _ANSI_ARGS_((Tcl_Interp *interp,
+ 			    Tcl_Obj *objPtr));
+ static void		UpdateStringOfByteArray _ANSI_ARGS_((Tcl_Obj *listPtr));
+@@ -1032,21 +1033,29 @@
+ 	}
+ 	case BINARY_SCAN: {
+ 	    int i;
++	    unsigned int unsign, optlen;
++	    char *opt;
+ 	    Tcl_Obj *valuePtr, *elementPtr;
+ 	    Tcl_HashTable numberCacheHash;
+ 	    Tcl_HashTable *numberCachePtr;
+ 
+ 	    if (objc < 4) {
+ 		Tcl_WrongNumArgs(interp, 2, objv,
+-			"value formatString ?varName varName ...?");
++			"?-unsigned? value formatString ?varName varName ...?");
+ 		return TCL_ERROR;
+ 	    }
+ 	    numberCachePtr = &numberCacheHash;
+ 	    Tcl_InitHashTable(numberCachePtr, TCL_ONE_WORD_KEYS);
+-	    buffer = Tcl_GetByteArrayFromObj(objv[2], &length);
+-	    format = Tcl_GetString(objv[3]);
+-	    cursor = buffer;
+ 	    arg = 4;
++	    unsign = 0;
++	    opt = Tcl_GetStringFromObj(objv[2],&optlen);
++	    if ( strncmp(opt, "-unsigned", optlen) == 0 ) {
++	        arg++;
++		unsign = 1;
++	    }
++	    buffer = Tcl_GetByteArrayFromObj(objv[arg-2], &length);
++	    format = Tcl_GetString(objv[arg-1]);
++	    cursor = buffer;
+ 	    offset = 0;
+ 	    while (*format != '\0') {
+ 		str = format;
+@@ -1254,7 +1263,7 @@
+ 				goto done;
+ 			    }
+ 			    valuePtr = ScanNumber(buffer+offset, cmd,
+-				    &numberCachePtr);
++				    &numberCachePtr,unsign);
+ 			    offset += size;
+ 			} else {
+ 			    if (count == BINARY_ALL) {
+@@ -1267,7 +1276,7 @@
+ 			    src = buffer+offset;
+ 			    for (i = 0; i < count; i++) {
+ 				elementPtr = ScanNumber(src, cmd,
+-					&numberCachePtr);
++					&numberCachePtr,unsign);
+ 				src += size;
+ 				Tcl_ListObjAppendElement(NULL, valuePtr,
+ 					elementPtr);
+@@ -1585,13 +1594,14 @@
+  */
+ 
+ static Tcl_Obj *
+-ScanNumber(buffer, type, numberCachePtrPtr)
++ScanNumber(buffer, type, numberCachePtrPtr,unsign)
+     unsigned char *buffer;	/* Buffer to scan number from. */
+     int type;			/* Format character from "binary scan" */
+     Tcl_HashTable **numberCachePtrPtr;
+ 				/* Place to look for cache of scanned
+ 				 * value objects, or NULL if too many
+ 				 * different numbers have been scanned. */
++    unsigned int unsign;        /* return unsigned integers */
+ {
+     long value;
+     Tcl_WideUInt uwvalue;
+@@ -1614,7 +1624,7 @@
+ 	     */
+ 
+ 	    value = buffer[0];
+-	    if (value & 0x80) {
++	    if ( ! unsign && (value & 0x80)) {
+ 		value |= -0x100;
+ 	    }
+ 	    goto returnNumericObject;
+@@ -1625,7 +1635,7 @@
+ 	case 'S':
+ 	    value = (long) (buffer[1] + (buffer[0] << 8));
+ 	    shortValue:
+-	    if (value & 0x8000) {
++	    if ( ! unsign && (value & 0x8000)) {
+ 		value |= -0x10000;
+ 	    }
+ 	    goto returnNumericObject;
+@@ -1647,9 +1657,17 @@
+ 	     * systems where an int is more than 32-bits.
+ 	     */
+ 
++	    /*
++	    printf("I:%c %ld\n",type,value);
++	    if ( unsign ) 
++	        if ( value < 0 ) {
++		  value = value & 0xEFFFFFFF;
++		  printf("U:%c %ld\n",type,value);
++	        }
++	    */
+ 	    if ((value & (((unsigned int)1)<<31)) && (value > 0)) {
+-		value -= (((unsigned int)1)<<31);
+-		value -= (((unsigned int)1)<<31);
++               value -= (((unsigned int)1)<<31);
++               value -= (((unsigned int)1)<<31);
+ 	    }
+ 	    returnNumericObject:
+ 	    if (*numberCachePtrPtr == NULL) {

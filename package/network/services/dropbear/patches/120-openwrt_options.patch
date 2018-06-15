@@ -9,15 +9,6 @@
  
  /* Setting this disables the fast exptmod bignum code. It saves ~5kB, but is
   * perhaps 20% slower for pubkey operations (it is probably worth experimenting
-@@ -81,7 +81,7 @@ much traffic. */
- 
- /* Enable "Netcat mode" option. This will forward standard input/output
-  * to a remote TCP-forwarded connection */
--#define ENABLE_CLI_NETCAT
-+/*#define ENABLE_CLI_NETCAT*/
- 
- /* Whether to support "-c" and "-m" flags to choose ciphers/MACs at runtime */
- #define ENABLE_USER_ALGO_LIST
 @@ -91,16 +91,16 @@ much traffic. */
   * Including multiple keysize variants the same cipher 
   * (eg AES256 as well as AES128) will result in a minimal size increase.*/
@@ -39,29 +30,6 @@
  
  /* Enable "Counter Mode" for ciphers. This is more secure than normal
   * CBC mode against certain attacks. It is recommended for security
-@@ -131,10 +131,10 @@ If you test it please contact the Dropbe
-  * If you disable MD5, Dropbear will fall back to SHA1 fingerprints,
-  * which are not the standard form. */
- #define DROPBEAR_SHA1_HMAC
--#define DROPBEAR_SHA1_96_HMAC
-+/*#define DROPBEAR_SHA1_96_HMAC*/
- #define DROPBEAR_SHA2_256_HMAC
--#define DROPBEAR_SHA2_512_HMAC
--#define DROPBEAR_MD5_HMAC
-+/*#define DROPBEAR_SHA2_512_HMAC*/
-+/*#define DROPBEAR_MD5_HMAC*/
- 
- /* You can also disable integrity. Don't bother disabling this if you're
-  * still using a cipher, it's relatively cheap. If you disable this it's dead
-@@ -146,7 +146,7 @@ If you test it please contact the Dropbe
-  * Removing either of these won't save very much space.
-  * SSH2 RFC Draft requires dss, recommends rsa */
- #define DROPBEAR_RSA
--#define DROPBEAR_DSS
-+/*#define DROPBEAR_DSS*/
- /* ECDSA is significantly faster than RSA or DSS. Compiling in ECC
-  * code (either ECDSA or ECDH) increases binary size - around 30kB
-  * on x86-64 */
 @@ -194,7 +194,7 @@ If you test it please contact the Dropbe
  
  /* Whether to print the message of the day (MOTD). This doesn't add much code

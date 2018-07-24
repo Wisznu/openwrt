@@ -68,11 +68,11 @@ CONFIG_TARGET_ramips_mt76x8=y
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_pbr-d1 is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_tplink_c20-v4 is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_tplink_c50-v3 is not set
-CONFIG_TARGET_ramips_mt76x8_DEVICE_tplink_tl-mr3420-v5=y
+# CONFIG_TARGET_ramips_mt76x8_DEVICE_tplink_tl-mr3420-v5 is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_tl-wr840n-v4 is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_tl-wr840n-v5 is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_tl-wr841n-v13 is not set
-# CONFIG_TARGET_ramips_mt76x8_DEVICE_tplink_tl-wr902ac-v3 is not set
+CONFIG_TARGET_ramips_mt76x8_DEVICE_tplink_tl-wr902ac-v3=y
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_tama_w06 is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_u7628-01-128M-16M is not set
 # CONFIG_TARGET_ramips_mt76x8_DEVICE_vocore2 is not set
@@ -88,7 +88,7 @@ CONFIG_HAS_SUBTARGETS=y
 CONFIG_HAS_DEVICES=y
 CONFIG_TARGET_BOARD="ramips"
 CONFIG_TARGET_SUBTARGET="mt76x8"
-CONFIG_TARGET_PROFILE="DEVICE_tplink_tl-mr3420-v5"
+CONFIG_TARGET_PROFILE="DEVICE_tplink_tl-wr902ac-v3"
 CONFIG_TARGET_ARCH_PACKAGES="mipsel_24kc"
 CONFIG_DEFAULT_TARGET_OPTIMIZATION="-Os -pipe -mno-branch-likely -mips32r2 -mtune=24kc"
 CONFIG_CPU_TYPE="24kc"
@@ -3937,7 +3937,7 @@ CONFIG_PACKAGE_libpcap=y
 # CONFIG_PACKAGE_libplist is not set
 # CONFIG_PACKAGE_libplistcxx is not set
 # CONFIG_PACKAGE_libpng is not set
-CONFIG_PACKAGE_libpopt=y
+# CONFIG_PACKAGE_libpopt is not set
 # CONFIG_PACKAGE_libpri is not set
 # CONFIG_PACKAGE_libprotobuf-c is not set
 # CONFIG_PACKAGE_libqrencode is not set
@@ -4340,10 +4340,7 @@ CONFIG_POSTFIX_PCRE=y
 # CONFIG_PACKAGE_curl is not set
 # CONFIG_PACKAGE_gnurl is not set
 # CONFIG_PACKAGE_lftp is not set
-CONFIG_PACKAGE_rsync=y
-# CONFIG_RSYNC_xattr is not set
-# CONFIG_RSYNC_acl is not set
-CONFIG_RSYNC_zlib=y
+# CONFIG_PACKAGE_rsync is not set
 # CONFIG_PACKAGE_rsyncd is not set
 # CONFIG_PACKAGE_vsftpd is not set
 # CONFIG_PACKAGE_vsftpd-tls is not set
@@ -5119,7 +5116,7 @@ CONFIG_PACKAGE_umbim=y
 # CONFIG_PACKAGE_vxlan is not set
 # CONFIG_PACKAGE_wakeonlan is not set
 CONFIG_PACKAGE_wpa-cli=y
-CONFIG_PACKAGE_wpa-supplicant=m
+CONFIG_PACKAGE_wpa-supplicant=y
 # CONFIG_WPA_SUPPLICANT_NO_TIMESTAMP_CHECK is not set
 # CONFIG_WPA_RFKILL_SUPPORT is not set
 CONFIG_WPA_MSG_MIN_PRIORITY=3
@@ -5137,7 +5134,7 @@ CONFIG_DRIVER_11W_SUPPORT=y
 # CONFIG_PACKAGE_wpad is not set
 # CONFIG_PACKAGE_wpad-mesh-openssl is not set
 # CONFIG_PACKAGE_wpad-mesh-wolfssl is not set
-CONFIG_PACKAGE_wpad-mini=y
+CONFIG_PACKAGE_wpad-mini=m
 # CONFIG_PACKAGE_wpad-openssl is not set
 # CONFIG_PACKAGE_wpad-wolfssl is not set
 # CONFIG_PACKAGE_wpan-tools is not set
